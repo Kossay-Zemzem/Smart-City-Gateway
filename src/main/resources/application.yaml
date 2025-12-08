@@ -3,10 +3,27 @@ spring:
     name: gateway
   cloud:
     gateway:
+      #uri -> lb://SERVICE-ID  ,  predicates -> everything before /** is removed when forwarding
       routes:
-        - id: transport-service
-          uri: http://localhost:8081
+        - id: TRANSPORT
+          uri: lb://transport
           predicates:
             - Path=/transport/**
+      # Enable route discovery logging
+      discovery:
+        locator:
+          enabled: true  # Changed to true for Eureka
+          lower-case-service-id: true
+
+# Eureka configuration (ADD this section)
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
 server:
   port: 9000
