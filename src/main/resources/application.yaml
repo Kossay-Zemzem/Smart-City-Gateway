@@ -9,13 +9,22 @@ spring:
           uri: lb://transport
           predicates:
             - Path=/transport/**
+        - id: PARKING
+          uri: lb://parking
+          predicates:
+            - Path=/parking/**
+        - id: FACTURE
+          uri: http://localhost:8182/services/API
+          predicates:
+            - Path=/facture/services/API/**
+
       # Enable route discovery logging
       discovery:
         locator:
           enabled: true  # Changed to true for Eureka
           lower-case-service-id: true
 
-# Eureka configuration (ADD this section)
+# Eureka configuration
 eureka:
   client:
     service-url:
